@@ -9,7 +9,7 @@ A calendar web component widget.
 Install package
 
 ```bash
-npm install calendar-wc
+npm i @codematic/calendar-wc
 ```
 
 ## API Reference
