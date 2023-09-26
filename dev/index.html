@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <title>&lt;my-element> Demo</title>
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../node_modules/lit/polyfill-support.js"></script>
+  <script type="module" src="../my-element.js"></script>
+  <script type="module" src="../calendar-wc.js"></script>
+  <style>
+    p {
+      border: solid 1px blue;
+      padding: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <my-element>
+    <p>This is child content</p>
+  </my-element>
+  <calendar-wc elevate highlight-dates="2023/09/27, 2022/07/20, 2022/05/01"
+    blur-dates="2022/08/20, 2022/08/25, 2022/08/01"></calendar-wc>
+</body>
+
+</html>
