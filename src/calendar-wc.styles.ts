@@ -82,6 +82,7 @@ const CalendarStyles = css`
     width: 14.2857%;
   }
 
+
   .clear-dates-btn,
   .done-btn {
     color: #eda075;
@@ -140,6 +141,46 @@ const CalendarStyles = css`
     cursor: pointer;
   }
 
+  @media (min-width: 595px) {
+    .days div {
+    font-size: 0.9rem;
+    height: 40px;
+  }
+
+  .weekdays div {
+    font-size: 0.9rem;
+  }
+
+  .header-month-year {
+    font-size: 0.9rem;
+  }
+}
+
+  @media (min-width: 755px) {
+    .days div {
+    height: 50px;
+    font-size: 1rem;
+  }
+
+  .weekdays div {
+    font-size: 1rem;
+  }
+
+  .header-month-year {
+    font-size: 1rem;
+  }
+
+  .clear-dates-btn,
+  .done-btn {
+    font-size: 1rem;
+  }
+
+  .selected-days-text {
+    font-size: 1rem;
+  }
+
+}
+
   .last-month-days {
     cursor: default !important;
   }
@@ -156,13 +197,13 @@ const CalendarStyles = css`
   .future-date.selected {
     background-color: #eda075;
     color: #fff;
-    border-radius: 50%;
+    border-radius: 100%;
   }
 
   .future-date.selected-range {
     background-color: hsl(22, 50%, 95%);
     color: #000;
-    border-radius: 50%;
+    border-radius: 100%;
   }
 `;
 
