@@ -39,11 +39,14 @@ export class Calendar extends LitElement {
   @state() private _totalSelectedDates = 0;
 
   static override styles = CalendarStyles;
+  
 
   override firstUpdated() {
     this.renderTwoColumnCalendar();
+    this.renderSingleColumnCalendar();
     if (this.elevate) this._baseElement.classList.add('elevate');
   }
+
 
   override updated() {
     this.attachOnSelectDateEventListener();
@@ -99,6 +102,16 @@ export class Calendar extends LitElement {
     }
   };
 
+  renderSingleColumnCalendar = () => {
+    const columnIndex = 1;
+      let daysBuilder = '';
+      this._date.setDate(1);
+      this.renderMonthNameInCalendarColumnHeader(columnIndex);
+      daysBuilder += this.previousMonthDaysInCurrentMonthBuilder();
+      daysBuilder += this.calendarDaysBuilder();
+      this.renderDaysBasedOnCalendarColumn(daysBuilder, columnIndex);
+  };
+
   setDateMonthAndYearBasedOnCalendarColumn(columnIndex: number) {
     const nextMonth = this._date.getMonth() + columnIndex;
     if (nextMonth >= 12) {
@@ -130,6 +143,7 @@ export class Calendar extends LitElement {
       days += `<div class="last-month-days"></div>`;
     }
     return days;
+
   }
 
   calendarDaysBuilder(): string {
@@ -217,10 +231,21 @@ export class Calendar extends LitElement {
   }
 
   moveToPreviousMonth() {
-    const monthToSubtract = 3;
-    this._date.setMonth(this._date.getMonth() - monthToSubtract);
+    if (window.innerWidth >= 414) {
+      this._date.setMonth(this._date.getMonth() - 3);
+      console.log("Large screen");
+    } else {
+      this._date.setMonth(this._date.getMonth() - 1);
+      console.log("small screen");
+    }
     this.renderCalendarWithSelectedDates();
   }
+
+  // moveToPreviousMonth() {
+  //   const monthToSubtract = 3;
+  //   this._date.setMonth(this._date.getMonth() - monthToSubtract);
+  //   this.renderCalendarWithSelectedDates();
+  // }
 
   moveToNextMonth() {
     const monthToAdd = 1;
@@ -228,8 +253,15 @@ export class Calendar extends LitElement {
     this.renderCalendarWithSelectedDates();
   }
 
+
   renderCalendarWithSelectedDates() {
-    this.renderTwoColumnCalendar();
+      const width = window.innerWidth;
+      if (width >= 414) {
+        this.renderTwoColumnCalendar();
+      } else {
+        this.renderSingleColumnCalendar();
+      }
+
     this.renderSelectedDates();
     this.requestUpdate();
   }
@@ -400,7 +432,25 @@ export class Calendar extends LitElement {
           </button>
           <p class="header-month-year"></p>
         </div>
+
         <div class="header">
+        <button class="nav-btn mobile" @click=${this.moveToPreviousMonth}>
+            <svg
+              width="24"
+              height="24"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 6L9 12L15 18"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
           <p class="header-month-year"></p>
           <button class="nav-btn" @click=${this.moveToNextMonth}>
             <svg

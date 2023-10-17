@@ -28,6 +28,14 @@ const CalendarStyles = css`
     width: 100%;
   }
 
+  @media (max-width: 414px) {
+    .calendar-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  }
+
   .calendar-footer {
     display: flex;
     align-items: center;
@@ -45,8 +53,27 @@ const CalendarStyles = css`
     align-items: center;
   }
 
+  .header .mobile{
+    display: none;
+  }
+
   .header:nth-child(1) {
     padding: 0 32px 0 8px;
+  }
+
+  @media (max-width: 414px) {
+    .header:nth-child(1) {
+      display: none;
+  }
+
+    .header:nth-child(2) {
+      padding: 0 24px !important;
+      width: 100%;
+  }
+
+  .header .mobile{
+    display: block;
+  }
   }
 
   .header:nth-child(2) {
@@ -56,6 +83,21 @@ const CalendarStyles = css`
   .month-container {
     display: flex;
     justify-content: space-between;
+  }
+
+  @media (max-width: 414px) {
+    .month-container {
+    display: grid;
+  }
+
+  .month {
+    width: 100% !important;
+    height: auto;
+  }
+
+  .month:nth-child(1) {
+    display: none;
+  }
   }
 
   .month {
@@ -123,6 +165,7 @@ const CalendarStyles = css`
     flex: 1;
     text-align: center;
   }
+  
 
   .days {
     width: 100%;
