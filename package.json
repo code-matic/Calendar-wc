@@ -1,6 +1,6 @@
 {
-  "name": "@codematic/calendar-wc",
-  "version": "1.0.4",
+  "name": "@codematic/calendar-wc", 
+  "version": "1.0.5",
   "description": "A calendar web component",
   "main": "calendar-wc.js",
   "module": "calendar-wc.js",
@@ -48,7 +48,8 @@
     "web-components",
     "lit-element",
     "typescript",
-    "lit"
+    "lit",
+    "date picker"
   ],
   "author": "Codematic Technology",
   "license": "BSD-3-Clause",

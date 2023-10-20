@@ -39,7 +39,6 @@ export class Calendar extends LitElement {
   @state() private _totalSelectedDates = 0;
 
   static override styles = CalendarStyles;
-  
 
   override firstUpdated() {
     this.renderTwoColumnCalendar();
@@ -233,19 +232,12 @@ export class Calendar extends LitElement {
   moveToPreviousMonth() {
     if (window.innerWidth >= 414) {
       this._date.setMonth(this._date.getMonth() - 3);
-      console.log("Large screen");
     } else {
       this._date.setMonth(this._date.getMonth() - 1);
-      console.log("small screen");
     }
     this.renderCalendarWithSelectedDates();
   }
 
-  // moveToPreviousMonth() {
-  //   const monthToSubtract = 3;
-  //   this._date.setMonth(this._date.getMonth() - monthToSubtract);
-  //   this.renderCalendarWithSelectedDates();
-  // }
 
   moveToNextMonth() {
     const monthToAdd = 1;
