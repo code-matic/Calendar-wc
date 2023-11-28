@@ -20,7 +20,9 @@ export class Calendar extends LitElement {
   @queryAll('.header-month-year')
   private _headerMonthYearElement!: HTMLDivElement[];
 
-  @property({type: Boolean, attribute: 'hide-footer'}) hideFooter = false;
+  @property({type: Boolean, attribute: 'hide-select-days-footer'}) hideDaysCountFooter =  false;
+
+  @property({type: Boolean, attribute: 'show-date-preview'}) showDatePreview =  true;
 
   @property({type: Boolean, attribute: 'elevate'}) elevate = false;
 
@@ -31,6 +33,8 @@ export class Calendar extends LitElement {
 
   @property({type: String, attribute: 'blur-dates'})
   blurDates = '';
+
+  @property({ type: String , attribute: 'button-color'}) buttonColor = '';
 
   @state() private _date: Date = new Date();
 
@@ -45,7 +49,6 @@ export class Calendar extends LitElement {
     this.renderSingleColumnCalendar();
     if (this.elevate) this._baseElement.classList.add('elevate');
   }
-
 
   override updated() {
     this.attachOnSelectDateEventListener();
@@ -228,7 +231,7 @@ export class Calendar extends LitElement {
   isPastYear(): boolean {
     return this._date.getFullYear() < new Date().getFullYear();
   }
-
+  
   moveToPreviousMonth() {
     if (window.innerWidth >= 414) {
       this._date.setMonth(this._date.getMonth() - 3);
@@ -238,13 +241,11 @@ export class Calendar extends LitElement {
     this.renderCalendarWithSelectedDates();
   }
 
-
   moveToNextMonth() {
     const monthToAdd = 1;
     this._date.setMonth(this._date.getMonth() + monthToAdd);
     this.renderCalendarWithSelectedDates();
   }
-
 
   renderCalendarWithSelectedDates() {
       const width = window.innerWidth;
@@ -315,6 +316,7 @@ export class Calendar extends LitElement {
       if (
         this._selectedDates.length === 1 &&
         selectedDate < this._selectedDates[0]
+        
       ) {
         this.clearSelectedDates();
       }
@@ -377,6 +379,15 @@ export class Calendar extends LitElement {
     );
   }
 
+  convertSelectedDate(item: string) {
+    const inputDate = new Date(item)
+    const options : Intl.DateTimeFormatOptions = {year: "numeric", month: "short", day: "numeric"};
+    const formattedDate = inputDate.toLocaleDateString("en-US", options);
+    if (this._selectedDates[0] !== undefined) 
+      return formattedDate
+    else return ("No date") 
+  }
+
   calendarMonthTemplate = () => html`<div class="month">
     <div class="weekdays">
       ${['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(
@@ -386,7 +397,7 @@ export class Calendar extends LitElement {
     <div class="days"></div>
   </div>`;
 
-  calendarFooterTemplate = () => html`<div class="calendar-footer">
+  calendarSelectedDaysFooterTemplate = () => html`<div class="calendar-footer">
     <button class="clear-dates-btn" @click=${this.clearSelectedDates}>
       Clear Dates
     </button>
@@ -398,11 +409,26 @@ export class Calendar extends LitElement {
           : `${this._totalSelectedDates} day`}
       </strong>
     </p>
-    <button class="done-btn" @click=${this.doneSelectingDate}>Done</button>
+    <button class="${this.buttonColor} done-btn" @click=${this.doneSelectingDate}>Apply</button>
   </div>`;
 
+  calendarFooterTemplate = () => html`
+    <div class="calender-footer-apply">
+        <button class="cancel-btn" @click=${this.clearSelectedDates}>Clear Dates</button>
+        <button class="apply-btn" @click=${this.doneSelectingDate}>Apply</button>
+    </div> `;
+
+  calendarPreviewDateTemplate = () => html`
+    <div class="calendar-preview" part="preview">
+      <div>${this.convertSelectedDate(this._selectedDates[0])}</div>
+      <span>-</span>
+      <div>${this.convertSelectedDate(this._selectedDates[this._selectedDates.length -1])}</div>
+    </div>
+`;
+
   override render() {
-    return html`<div class="calendar">
+    return html`
+    <div class="calendar">
       <div class="calendar-header">
         <div class="header">
           <button class="nav-btn" @click=${this.moveToPreviousMonth}>
@@ -462,13 +488,20 @@ export class Calendar extends LitElement {
             </svg>
           </button>
         </div>
-      </div>
+    </div>
+
+      ${this.showDatePreview ? this.calendarPreviewDateTemplate() : ""}
+
       <div class="month-container">
         ${this.calendarMonthTemplate()} ${this.calendarMonthTemplate()}
       </div>
-      ${this.hideFooter ? null : this.calendarFooterTemplate()}
+      ${this.hideDaysCountFooter ? this.calendarFooterTemplate() : this.calendarSelectedDaysFooterTemplate()}
     </div>`;
   }
+
+  //  override createRenderRoot() {
+  //   return this;
+  // }
 }
 
 declare global {

@@ -14,12 +14,13 @@ import {customElement, property} from 'lit/decorators.js';
  * @slot - This element has a slot
  * @csspart button - The button
  */
+
 @customElement('my-element')
 export class MyElement extends LitElement {
-  static override styles = css`
+   styles = css`
     :host {
       display: block;
-      border: solid 1px gray;
+      border: 1px solid  purple;
       padding: 16px;
       max-width: 800px;
     }
@@ -28,6 +29,7 @@ export class MyElement extends LitElement {
   /**
    * The name to say "Hello" to.
    */
+
   @property()
   name = 'World';
 
@@ -46,6 +48,10 @@ export class MyElement extends LitElement {
       <slot></slot>
     `;
   }
+
+  // protected override createRenderRoot() {
+  //   return this;
+  // }
 
   private _onClick() {
     this.count++;

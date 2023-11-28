@@ -10,6 +10,7 @@ const CalendarStyles = css`
     box-sizing: border-box;
   }
 
+
   .calendar {
     width: 100%;
     height: auto;
@@ -46,6 +47,38 @@ const CalendarStyles = css`
     padding: 0 12px;
   }
 
+  .calender-footer-apply {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 12px;
+    border-top: 1.5px solid #eeeeee;
+  }
+
+  .calender-footer-apply button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 140px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 16px;
+  }
+
+  .cancel-btn {
+    border-radius: 8px;
+    border: 1px solid #D0D5DD;
+    background: #FFF;
+
+  }
+
+  .apply-btn {
+  border-radius: 8px;
+  border: 1px solid #eda075;
+  background: #eda075;
+  color: #fff;
+  }
+
   .header {
     width: 240px;
     height: 56px;
@@ -74,6 +107,13 @@ const CalendarStyles = css`
   .header .mobile{
     display: block;
   }
+
+  .calender-footer-apply button {
+    width: 100px;
+    font-size: 14px;
+    padding: 10px;
+  }
+
   }
 
   .header:nth-child(2) {
@@ -97,6 +137,19 @@ const CalendarStyles = css`
 
   .month:nth-child(1) {
     display: none;
+  }
+
+  .clear-dates-btn {
+    padding: 8px !important;
+  }
+
+  .done-btn {
+    padding: 8px  !important;
+  }
+
+  .clear-dates-btn,
+  .done-btn {
+    width: fit-content
   }
   }
 
@@ -127,28 +180,34 @@ const CalendarStyles = css`
 
   .clear-dates-btn,
   .done-btn {
-    color: #eda075;
-    background-color: transparent;
-    border: none;
     font-weight: 600;
     font-size: 0.75rem;
     cursor: pointer;
+    width: 130px;
   }
 
   .clear-dates-btn {
     padding: 0;
+    border-radius: 8px;
+    border: 1px solid rgb(208, 213, 221);
+    background: rgb(255, 255, 255); 
+    padding: 10px 16px
   }
 
   .done-btn {
     background-color: #eda075;
     color: #fff;
     border-radius: 0.3rem;
-    height: 30px;
-    width: 56px;
+    border: 0;
+    padding: 10px 16px
   }
 
   .selected-days-text {
     font-size: 0.75rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
   .nav-btn {
@@ -177,7 +236,7 @@ const CalendarStyles = css`
   .days div {
     font-size: 0.75rem;
     width: 14.2857%;
-    height: 26.4px;
+    height: 44.4px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -243,10 +302,43 @@ const CalendarStyles = css`
     border-radius: 100%;
   }
 
+
   .future-date.selected-range {
     background-color: hsl(22, 50%, 95%);
     color: #000;
     border-radius: 100%;
+  }
+
+  .calendar-preview {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px 20px;
+  }
+
+  .calendar-preview div{
+  width: 140px;
+  border-radius: 8px;
+  border: 1px solid #D0D5DD;
+  background: #FFF;
+  padding: 10px 16px;
+  display : flex;
+  justify-content: center;
+  }
+
+  .calendar-preview span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+
+  @media (max-width: 414px) {
+  .calendar-preview div{
+    width: 100px;
+    font-size: 12px;
+    padding: 10px;
+  }
   }
 `;
 

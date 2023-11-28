@@ -18,9 +18,11 @@ npm i @codematic/calendar-wc
 | ------------------| -----------| -------------------------------------------------------------------|
 | `disabled`        | `boolean`  | disable selection of all dates in the calendar                                      |
 | `elevate`         | `boolean`  | add shadow effect to calendar                                      |
-| `hide-footer`     | `boolean`  | hide calendar footer                                               |
+| `hide-select-days-footer`     | `boolean`  | hide selected days counter                             |
+| `show-date-preview`     | `boolean`  | preview selected dates                                       |
 | `highlight-dates` | `string`   | list of date to highlight on the calendar separated by commas. Format `"yyyy/mm/dd"` |
 | `blur-dates` | `string`   | list of date to blur out on the calendar separated by commas. Format `"yyyy/mm/dd"` |
+
 
 ## Image Reference
 
