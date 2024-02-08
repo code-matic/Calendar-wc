@@ -22,6 +22,19 @@ npm i @codematic/calendar-wc
 | `show-date-preview`     | `boolean`  | preview selected dates                                       |
 | `highlight-dates` | `string`   | list of date to highlight on the calendar separated by commas. Format `"yyyy/mm/dd"` |
 | `blur-dates` | `string`   | list of date to blur out on the calendar separated by commas. Format `"yyyy/mm/dd"` |
+| `blur-date-range` | `string[]`   | list of date range to blur out on the calendar separated by commas. Format `"yyyy/mm/dd"` |
+| `show-old-dates` | `boolean`   | enable selection of all dates in the past |
+
+
+## Code Sample
+```
+    <calendar-wc elevate 
+        blur-dates-range="['2024/02/05', '2024/02/15', '2024/12/25']"
+        blur-dates="2024/02/25"
+        highlight-dates="2024/02/19"
+    ></calendar-wc>
+```
+
 
 
 ## Image Reference

@@ -22,6 +22,8 @@ export class Calendar extends LitElement {
 
   @property({type: Boolean, attribute: 'hide-select-days-footer'}) hideDaysCountFooter =  false;
 
+  @property({type: Boolean, attribute: 'show-old-dates'}) showOldDates =  true;
+
   @property({type: Boolean, attribute: 'show-date-preview'}) showDatePreview =  true;
 
   @property({type: Boolean, attribute: 'elevate'}) elevate = false;
@@ -33,6 +35,9 @@ export class Calendar extends LitElement {
 
   @property({type: String, attribute: 'blur-dates'})
   blurDates = '';
+
+  @property({type: String, attribute: 'blur-dates-range'})
+  blurDateRange = '';
 
   @property({ type: String , attribute: 'button-color'}) buttonColor = '';
 
@@ -54,6 +59,7 @@ export class Calendar extends LitElement {
     this.attachOnSelectDateEventListener();
     if (this.highlightDates) this.renderHighlightedDates();
     if (this.blurDates) this.renderBlurredDates();
+    if (this.blurDateRange) this.renderBlurredDateRange();
     if (this._selectedDates.length === 2) {
       this.renderSelectedDateRange();
     }
@@ -66,6 +72,9 @@ export class Calendar extends LitElement {
       ?.addEventListener('click', this.onSelectDate);
     this.renderRoot
       .querySelectorAll('.future-date')
+      .forEach((el) => el.addEventListener('click', this.onSelectDate));
+    this.renderRoot
+      .querySelectorAll('.past-date')
       .forEach((el) => el.addEventListener('click', this.onSelectDate));
   }
 
@@ -91,6 +100,27 @@ export class Calendar extends LitElement {
         ? this._totalSelectedDates
         : this._selectedDates.length + totalDateRange;
   }
+
+
+  listDates(startDate : string, endDate: string): Date[] {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const dateList: Date[] = [];
+    while (start <= end) {
+      dateList.push(new Date(start));
+      start.setDate(start.getDate() + 1);
+    }
+    return dateList;
+  }
+
+
+  formatDateList(date: Date): string {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}/${month}/${day}`;
+  }
+
 
   renderTwoColumnCalendar = () => {
     for (let columnIndex = 0; columnIndex < 2; columnIndex += 1) {
@@ -145,7 +175,6 @@ export class Calendar extends LitElement {
       days += `<div class="last-month-days"></div>`;
     }
     return days;
-
   }
 
   calendarDaysBuilder(): string {
@@ -154,9 +183,11 @@ export class Calendar extends LitElement {
     for (let day = 1; day <= lastDay; day += 1) {
       if (this.isToday(day)) {
         days += this.dayElement('today', day);
-      } else if (this.isPastDate(day, lastDay)) {
-        days += this.dayElement('past-date', day);
-      } else {
+      } 
+      else if (this.isPastDate(day, lastDay)) {
+        days += this.dayElement(this.showOldDates ? 'past-date' : 'hide-past-date', day);
+      } 
+      else {
         days += this.dayElement('future-date', day);
       }
     }
@@ -201,6 +232,7 @@ export class Calendar extends LitElement {
       this.isPastYear()
     );
   }
+
 
   isPastDayOfCurrentMonthAndYear(dayOfTheMonth: number): boolean {
     return (
@@ -286,6 +318,8 @@ export class Calendar extends LitElement {
     });
   }
 
+
+  // Blurs a single date
   renderBlurredDates() {
     this.renderRoot.querySelectorAll('.days > div').forEach((el) => {
       if (
@@ -297,6 +331,32 @@ export class Calendar extends LitElement {
       }
     });
   }
+
+  // Blurs a date range
+  renderBlurredDateRange() {
+     const stringToArray = JSON.parse(this.blurDateRange.replaceAll(/'/g, '"'))
+      if (this.blurDateRange.length >= 2) {
+        const startDate = stringToArray[0]
+        const endDate = stringToArray[1];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this.listDates(startDate, endDate).map((listedDate) => (
+          this.formatDateList(listedDate),
+        // console.log(this.formatDateList(listedDate)),
+        this.renderRoot.querySelectorAll('.days > div').forEach((el) => {
+          if (
+            el instanceof HTMLDivElement &&
+            el.dataset.date &&
+            this.formatDateList(listedDate).replaceAll(' ', '').split(',').includes(el.dataset.date)
+          ) {
+            el.classList.add('blur-date');
+          }
+        })
+          ))
+
+
+    }
+  }
+
 
   onSelectDate = (event: Event) => {
     const element = event.target as HTMLElement;
@@ -310,8 +370,7 @@ export class Calendar extends LitElement {
     if (element.classList.contains('selected')) {
       element.classList.remove('selected');
       this._selectedDates = this._selectedDates.filter(
-        (date: string) => date !== selectedDate
-      );
+        (date: string) => date !== selectedDate);
     } else {
       if (
         this._selectedDates.length === 1 &&

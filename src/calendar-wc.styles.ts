@@ -287,23 +287,66 @@ const CalendarStyles = css`
     cursor: default !important;
   }
 
-  .past-date,
+  .hide-past-date,
   .blur-date {
     color: #909090;
     opacity: 0.4;
     cursor: not-allowed !important;
+    position: relative;
   }
 
-  .past-date.selected,
+  
+  .blur-date::before  {
+    content: "Date Unavailable";
+    text-align: center;
+    position: absolute;
+    bottom: 60%;
+    left: 50%;
+    width: max-content;
+    transform: translateX(-50%);
+    background-color: #0e0d0d !important;
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    font-size: 12px;
+  }
+
+  .blur-date:hover::before {
+  opacity: 1;
+  background-color: #0e0d0d !important;
+  }
+
+
   .today.selected,
   .future-date.selected {
     background-color: #eda075;
     color: #fff;
     border-radius: 100%;
+    position:relative;
   }
 
+  .past-date.selected:hover .tooltiptext,
+  .today.selected:hover .tooltiptext,
+  .future-date.selected:hover .tooltiptext {
+    visibility: visible;
+  }
 
   .future-date.selected-range {
+    background-color: hsl(22, 50%, 95%);
+    color: #000;
+    border-radius: 100%;
+  }
+
+  .past-date.selected {
+    background-color: #eda075;
+    color: #fff;
+    border-radius: 100%;
+    position:relative;
+  }
+
+  .past-date.selected-range {
     background-color: hsl(22, 50%, 95%);
     color: #000;
     border-radius: 100%;
