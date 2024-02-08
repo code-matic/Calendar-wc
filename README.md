@@ -26,15 +26,6 @@ npm i @codematic/calendar-wc
 | `show-old-dates` | `boolean`   | enable selection of all dates in the past |
 
 
-## Code Sample
-```
-    <calendar-wc elevate 
-        blur-dates-range="['2024/02/05', '2024/02/15', '2024/12/25']"
-        blur-dates="2024/02/25"
-        highlight-dates="2024/02/19"
-    ></calendar-wc>
-```
-
 
 
 ## Image Reference
