@@ -350,7 +350,7 @@ export class Calendar extends LitElement {
             el.classList.add('blur-date');
           }
         })
-      ))
+          ))
     }
   }
 
