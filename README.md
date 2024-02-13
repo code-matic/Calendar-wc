@@ -29,6 +29,7 @@ npm i @codematic/calendar-wc
 
 
 ## Image Reference
+![Calendar](https://github.com/code-matic/Calendar-wc/assets/144052404/f275fac9-1f1e-4289-8501-67733c780cf7)
 
-![Calendar](https://github.com/code-matic/Calendar-wc/assets/144052404/cfde6f7f-7762-4ac1-812d-1d3dd89037f2)
+
 
