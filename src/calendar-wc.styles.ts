@@ -292,6 +292,7 @@ const CalendarStyles = css`
     color: #909090;
     opacity: 0.4;
     cursor: not-allowed !important;
+    pointer-events: none;
     position: relative;
   }
 

@@ -318,7 +318,6 @@ export class Calendar extends LitElement {
     });
   }
 
-
   // Blurs a single date
   renderBlurredDates() {
     this.renderRoot.querySelectorAll('.days > div').forEach((el) => {
@@ -351,9 +350,7 @@ export class Calendar extends LitElement {
             el.classList.add('blur-date');
           }
         })
-          ))
-
-
+      ))
     }
   }
 
